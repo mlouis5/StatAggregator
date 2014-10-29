@@ -10,13 +10,18 @@ import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.NflSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -42,17 +47,17 @@ public class JsonRetreiver {
     private List<NflSchedule> schedules;
     private ApplicationContext ctx;
     private boolean isTaskComplete;
-    
+
     public void setSearchYear(int year) {
         this.year = year;
         isTaskComplete = false;
         Map<String, Integer> params = new HashMap();
         params.put("year", 2013);
-        schedules = sr.findByNamedQuery(NflSchedule.class, "Year", params);        
+        schedules = sr.findByNamedQuery(NflSchedule.class, "Year", params);
         ctx = new AnnotationConfigApplicationContext(AggregatorConfig.class);
     }
-    
-    public boolean taskComplete(){
+
+    public boolean taskComplete() {
         return isTaskComplete;
     }
 
@@ -60,7 +65,7 @@ public class JsonRetreiver {
         System.out.println("RUNNING");
         System.out.println("year: " + year + "\tschedules: " + schedules);
         if (Objects.nonNull(year) && Objects.nonNull(schedules)) {
-            
+
             if (schedules.isEmpty()) {
                 isTaskComplete = true;
                 return;
@@ -69,15 +74,23 @@ public class JsonRetreiver {
 
             WebTarget target = client.target(BASE_NFL_LINK).path(path)
                     .path(sched.getGameDate()).path(sched.getGameDate() + "_gtd" + FORMAT);
-            
-            String nflData = target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class);
-            System.out.println(nflData);
-            GameData gd = ctx.getBean(GameData.class);
-            
-            gd.setGame(nflData);
-            gd.setYear(year);
-            
-            gdr.create(gd);
+
+            //String nflData = target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class);
+            Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
+
+            System.out.println(response);
+            if (response.getStatus() == 200) {
+                String nflData = response.readEntity(String.class);
+                System.out.println(nflData);
+                GameData gd = ctx.getBean(GameData.class);
+
+                String identifier = nflData.substring(2, 12);
+                gd.setGameIdentifier(identifier);
+                gd.setGame(nflData);
+                gd.setYear(year);
+
+                gdr.create(gd);
+            }
         }
     }
 }

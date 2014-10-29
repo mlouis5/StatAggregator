@@ -6,12 +6,12 @@
 package com.fantasy.stataggregator.entities;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,20 +26,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GameData.findAll", query = "SELECT g FROM GameData g"),
-    @NamedQuery(name = "GameData.findById", query = "SELECT g FROM GameData g WHERE g.id = :id"),
     @NamedQuery(name = "GameData.findByGame", query = "SELECT g FROM GameData g WHERE g.game = :game"),
     @NamedQuery(name = "GameData.findByYear", query = "SELECT g FROM GameData g WHERE g.year = :year")})
 public class GameData implements Serializable {
-    @Basic(optional = false)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @Column(name = "game")
+    private String game;
     @Id
     @Basic(optional = false)
     @Column(name = "game_identifier", nullable = false, length = 10)
     private String gameIdentifier;
     private static final long serialVersionUID = 1L;
-    @Column(name = "game", length = 2147483647)
-    private String game;
     @Column(name = "year")
     private Integer year;
 
@@ -50,33 +46,12 @@ public class GameData implements Serializable {
         this.gameIdentifier = gameIdentifier;
     }
 
-    public GameData(String gameIdentifier, int id) {
-        this.gameIdentifier = gameIdentifier;
-        this.id = id;
-    }
-
-    public String getGame() {
-        return game;
-    }
-
-    public void setGame(String game) {
-        this.game = game;
-    }
-
     public Integer getYear() {
         return year;
     }
 
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getGameIdentifier() {
@@ -110,6 +85,14 @@ public class GameData implements Serializable {
     @Override
     public String toString() {
         return "com.fantasy.stataggregator.entities.GameData[ gameIdentifier=" + gameIdentifier + " ]";
+    }
+
+    public String getGame() {
+        return game;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
     }
     
 }

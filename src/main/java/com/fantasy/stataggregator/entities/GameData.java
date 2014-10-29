@@ -30,12 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GameData.findByGame", query = "SELECT g FROM GameData g WHERE g.game = :game"),
     @NamedQuery(name = "GameData.findByYear", query = "SELECT g FROM GameData g WHERE g.year = :year")})
 public class GameData implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "game_identifier", nullable = false, length = 10)
+    private String gameIdentifier;
+    private static final long serialVersionUID = 1L;
     @Column(name = "game", length = 2147483647)
     private String game;
     @Column(name = "year")
@@ -44,15 +46,12 @@ public class GameData implements Serializable {
     public GameData() {
     }
 
-    public GameData(Integer id) {
-        this.id = id;
+    public GameData(String gameIdentifier) {
+        this.gameIdentifier = gameIdentifier;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public GameData(String gameIdentifier, int id) {
+        this.gameIdentifier = gameIdentifier;
         this.id = id;
     }
 
@@ -72,10 +71,26 @@ public class GameData implements Serializable {
         this.year = year;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGameIdentifier() {
+        return gameIdentifier;
+    }
+
+    public void setGameIdentifier(String gameIdentifier) {
+        this.gameIdentifier = gameIdentifier;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (gameIdentifier != null ? gameIdentifier.hashCode() : 0);
         return hash;
     }
 
@@ -86,7 +101,7 @@ public class GameData implements Serializable {
             return false;
         }
         GameData other = (GameData) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.gameIdentifier == null && other.gameIdentifier != null) || (this.gameIdentifier != null && !this.gameIdentifier.equals(other.gameIdentifier))) {
             return false;
         }
         return true;
@@ -94,7 +109,7 @@ public class GameData implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fantasy.stataggregator.entities.GameData[ id=" + id + " ]";
+        return "com.fantasy.stataggregator.entities.GameData[ gameIdentifier=" + gameIdentifier + " ]";
     }
     
 }

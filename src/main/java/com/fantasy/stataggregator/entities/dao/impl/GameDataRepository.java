@@ -11,30 +11,18 @@ import com.fantasy.stataggregator.entities.dao.AbstractRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.TypedQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Mac
  */
 public class GameDataRepository extends AbstractRepository<GameData>  {
-
-    //@Autowired
-    private EntityManager em;
     
-    public GameDataRepository(EntityManagerFactory emf) {
+    public GameDataRepository() {
         super(GameData.class);
-        em = emf.createEntityManager();
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
     }
 
     @Override
@@ -53,7 +41,7 @@ public class GameDataRepository extends AbstractRepository<GameData>  {
         List<GameData> results = new ArrayList(1);
         if (Objects.nonNull(queryName)) {
             TypedQuery<GameData> query
-                    = getEntityManager().createNamedQuery(queryName, GameData.class);
+                    = em.createNamedQuery(queryName, GameData.class);
             results = query.getResultList();
         }
         return results;

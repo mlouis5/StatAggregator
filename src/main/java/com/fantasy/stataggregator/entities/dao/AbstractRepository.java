@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
@@ -18,40 +19,41 @@ import javax.persistence.TypedQuery;
  * @param <T>
  */
 public abstract class AbstractRepository<T> {
+    
+    @PersistenceContext
+    protected EntityManager em;
     private final Class<T> entityClass;
 
     public AbstractRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
-    protected abstract EntityManager getEntityManager();
-
     public void create(T entity) {
         if (Objects.nonNull(entity)) {
-            getEntityManager().persist(entity);
+            em.persist(entity);
         }
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);
+        em.merge(entity);
     }
 
     public void remove(T entity) {
-        getEntityManager().remove(getEntityManager().merge(entity));
+        em.remove(em.merge(entity));
     }
 
     public T find(Object id) {
         T entity = null;
         if (Objects.nonNull(id)) {
-            entity = getEntityManager().find(entityClass, id);            
+            entity = em.find(entityClass, id);            
         }
         return entity;
     }
     
     protected T findLast(){
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        javax.persistence.Query q = em.createQuery(cq);
         
         List<T> option = Optional.ofNullable(q.setMaxResults(1).getResultList()).orElse(new ArrayList());
         
@@ -65,25 +67,25 @@ public abstract class AbstractRepository<T> {
     public abstract List<T> findByNamedQuery(String name);
 
     public List<T> findAll() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));        
-        return getEntityManager().createQuery(cq).getResultList();
+        return em.createQuery(cq).getResultList();
     }
 
     public List<T> findRange(int[] range) {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        javax.persistence.Query q = em.createQuery(cq);
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
 
     public int count() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
-        cq.select(getEntityManager().getCriteriaBuilder().count(rt));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        cq.select(em.getCriteriaBuilder().count(rt));
+        javax.persistence.Query q = em.createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
 

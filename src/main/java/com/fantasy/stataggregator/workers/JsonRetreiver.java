@@ -10,9 +10,10 @@ import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.NflSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.TimerTask;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -25,8 +26,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author MacDerson
  */
-@EnableScheduling
-public class JsonRetreiver extends TimerTask {
+public class JsonRetreiver {
 
     private static final String pathSeparator = "/";
     private static final String BASE_NFL_LINK = "http://www.nfl.com";
@@ -40,25 +40,28 @@ public class JsonRetreiver extends TimerTask {
     @Autowired
     private Client client;
     private List<NflSchedule> schedules;
-    private ApplicationContext ctx;  
+    private ApplicationContext ctx;
     private boolean isTaskComplete;
-
+    
     public void setSearchYear(int year) {
         this.year = year;
-        schedules = sr.findByNamedQuery("year");
         isTaskComplete = false;
+        Map<String, Integer> params = new HashMap();
+        params.put("year", 2013);
+        schedules = sr.findByNamedQuery(NflSchedule.class, "Year", params);        
         ctx = new AnnotationConfigApplicationContext(AggregatorConfig.class);
     }
     
-    public synchronized boolean isTaskComplete(){
+    public boolean taskComplete(){
         return isTaskComplete;
     }
 
-    @Override
     public void run() {
+        System.out.println("RUNNING");
+        System.out.println("year: " + year + "\tschedules: " + schedules);
         if (Objects.nonNull(year) && Objects.nonNull(schedules)) {
+            
             if (schedules.isEmpty()) {
-                this.cancel();
                 isTaskComplete = true;
                 return;
             }
@@ -68,7 +71,7 @@ public class JsonRetreiver extends TimerTask {
                     .path(sched.getGameDate()).path(sched.getGameDate() + "_gtd" + FORMAT);
             
             String nflData = target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class);
-            
+            System.out.println(nflData);
             GameData gd = ctx.getBean(GameData.class);
             
             gd.setGame(nflData);

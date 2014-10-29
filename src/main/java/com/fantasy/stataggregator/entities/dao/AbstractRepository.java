@@ -5,21 +5,28 @@
  */
 package com.fantasy.stataggregator.entities.dao;
 
+import com.fantasy.stataggregator.entities.GameData;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author MacDerson
  * @param <T>
  */
+@Transactional(readOnly = true)
 public abstract class AbstractRepository<T> {
-    
+
     @PersistenceContext
     protected EntityManager em;
     private final Class<T> entityClass;
@@ -28,16 +35,19 @@ public abstract class AbstractRepository<T> {
         this.entityClass = entityClass;
     }
 
+    @Transactional(readOnly = false)
     public void create(T entity) {
         if (Objects.nonNull(entity)) {
             em.persist(entity);
         }
     }
 
+    @Transactional(readOnly = false)
     public void edit(T entity) {
         em.merge(entity);
     }
 
+    @Transactional(readOnly = false)
     public void remove(T entity) {
         em.remove(em.merge(entity));
     }
@@ -45,30 +55,54 @@ public abstract class AbstractRepository<T> {
     public T find(Object id) {
         T entity = null;
         if (Objects.nonNull(id)) {
-            entity = em.find(entityClass, id);            
+            entity = em.find(entityClass, id);
         }
         return entity;
     }
-    
-    protected T findLast(){
+
+    protected T findLast() {
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = em.createQuery(cq);
-        
+
         List<T> option = Optional.ofNullable(q.setMaxResults(1).getResultList()).orElse(new ArrayList());
-        
+
         T entity = null;
-        if(Objects.nonNull(option.get(0))){
+        if (Objects.nonNull(option.get(0))) {
             entity = option.get(0);
         }
         return entity;
     }
-    
-    public abstract List<T> findByNamedQuery(String name);
+
+    public List<T> findByNamedQuery(Class<T> entity, String name, Map<String, ? extends Object> parameters) {
+        NamedQueries nq = entity.getAnnotation(NamedQueries.class);
+        NamedQuery[] nqs = nq.value();
+        String queryName = null;
+
+        for (NamedQuery qn : nqs) {
+            String qname = qn.name();
+            if (qname.contains(name)) {
+                queryName = qname;
+                break;
+            }
+        }
+        List<T> results = new ArrayList(1);
+        if (Objects.nonNull(queryName)) {
+            TypedQuery<T> query
+                    = em.createNamedQuery(queryName, entityClass);
+            if (Objects.nonNull(parameters) && !parameters.isEmpty()) {
+                for (Map.Entry entry : parameters.entrySet()) {
+                    query.setParameter((String) entry.getKey(), entry.getValue());
+                }
+            }
+            results = query.getResultList();
+        }
+        return results;
+    }
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));        
+        cq.select(cq.from(entityClass));
         return em.createQuery(cq).getResultList();
     }
 

@@ -13,7 +13,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.util.Properties;
 import java.util.Timer;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.sql.DataSource;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -31,6 +30,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.eclipse.persistence.config.EntityManagerProperties;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
@@ -44,13 +45,8 @@ import org.eclipse.persistence.config.EntityManagerProperties;
  * SomeClass sc = ctx.getBean(SomeClass.class);
  */
 @Configuration()
+@EnableTransactionManagement
 public class AggregatorConfig {
-
-//    @Bean
-//    @Primary
-//    public EntityManagerFactory entityManagerFactory() {
-//        return Persistence.createEntityManagerFactory("com.fantasy_StatAggregator_jar_1.0PU");
-//    }
 
     @Bean
     public ScheduleRepository scheduleRepository() {
@@ -130,9 +126,8 @@ public class AggregatorConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        //properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        //properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.setProperty(EntityManagerProperties.PERSISTENCE_CONTEXT_PERSIST_ON_COMMIT, "true");
+        properties.setProperty("eclipselink.weaving", "false");
         return properties;
     }
 }

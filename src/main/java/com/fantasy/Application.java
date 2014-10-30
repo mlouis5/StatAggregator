@@ -6,7 +6,7 @@
 package com.fantasy;
 
 import com.fantasy.stataggregator.Task;
-import com.fantasy.stataggregator.workers.JsonRetreiver;
+import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +22,8 @@ public class Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext context;
         context = SpringApplication.run(AggregatorConfig.class);
-        Task jsonRetreiver = context.getBean(JsonRetreiver.class);
-        ((JsonRetreiver) jsonRetreiver).setSearchYear(2013);
+        Task jsonRetreiver = context.getBean(GameDataRetrieverTask.class);
+        ((GameDataRetrieverTask) jsonRetreiver).setSearchYear(2013);
         try {
             while (!jsonRetreiver.taskComplete()) {
                 jsonRetreiver.run();

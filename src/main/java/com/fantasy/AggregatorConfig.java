@@ -9,8 +9,9 @@ import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
-import com.fantasy.stataggregator.workers.JsonRetreiver;
+import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.Timer;
 import javax.persistence.EntityManagerFactory;
@@ -47,6 +48,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration()
 @EnableTransactionManagement
 public class AggregatorConfig {
+    
+    @Bean
+    public SimpleDateFormat simpleDateFormat(){
+        return new SimpleDateFormat();
+    }
     
     @Bean
     public ScheduleRepository scheduleRepository() {
@@ -89,8 +95,8 @@ public class AggregatorConfig {
     }
 
     @Bean
-    public JsonRetreiver jsonRetriever() {
-        return new JsonRetreiver();
+    public GameDataRetrieverTask jsonRetriever() {
+        return new GameDataRetrieverTask();
     }
 
     @Bean

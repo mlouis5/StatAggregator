@@ -27,7 +27,7 @@ public class Application {
         try {
             while (!jsonRetreiver.taskComplete()) {
                 jsonRetreiver.run();
-                Thread.sleep(15000L);
+                Thread.sleep(5000L);
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);

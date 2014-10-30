@@ -19,13 +19,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -108,10 +113,21 @@ public class GameDataRetrieverTask implements Task {
                         GameData gd = ctx.getBean(GameData.class);
                         GameDataPK gdPK = ctx.getBean(GameDataPK.class);
 
-                        String identifier = nflData.substring(2, 12);
+                        JSONObject jsonOb = new JSONObject(nflData);
+                        Iterator iter = jsonOb.keys();
+                        String identifier = null;
+                        
+                        while(iter.hasNext()){
+                            Object key = iter.next();
+                            if(key.toString().equals(sched.getGameDate())){
+                                identifier = key.toString();
+                                break;
+                            }
+                        }
+                        
                         gdPK.setGameIdentifier(identifier);
                         gdPK.setYear(year);
-
+                        
                         gd.setGameDataPK(gdPK);
 
                         gd.setGame(nflData);
@@ -121,6 +137,8 @@ public class GameDataRetrieverTask implements Task {
                     }
                 }
             } catch (ParseException pe) {
+            } catch (JSONException ex) {
+                Logger.getLogger(GameDataRetrieverTask.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

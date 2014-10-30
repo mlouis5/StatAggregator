@@ -6,6 +6,7 @@
 package com.fantasy;
 
 import com.fantasy.stataggregator.entities.GameData;
+import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
 import com.fantasy.stataggregator.workers.JsonRetreiver;
@@ -30,7 +31,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.eclipse.persistence.config.EntityManagerProperties;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration()
 @EnableTransactionManagement
 public class AggregatorConfig {
-
+    
     @Bean
     public ScheduleRepository scheduleRepository() {
         return new ScheduleRepository();
@@ -62,6 +62,12 @@ public class AggregatorConfig {
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public GameData gameData() {
         return new GameData();
+    }
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public GameDataPK gameDataPK(){
+        return new GameDataPK();
     }
 
     @Bean

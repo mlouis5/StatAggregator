@@ -6,18 +6,16 @@
 package com.fantasy.stataggregator.workers;
 
 import com.fantasy.AggregatorConfig;
+import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.entities.GameData;
+import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.NflSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -25,13 +23,14 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- *
+ * NFLGameRetreiver retrieves every json file from nfl.com's game center for a given year<br>
+ * then persist that data  as a LOB in a postgresql database.
+ * @version %I%, %G%
  * @author MacDerson
  */
-public class JsonRetreiver {
+public class JsonRetreiver implements Task {
 
     private static final String pathSeparator = "/";
     private static final String BASE_NFL_LINK = "http://www.nfl.com";
@@ -57,13 +56,16 @@ public class JsonRetreiver {
         ctx = new AnnotationConfigApplicationContext(AggregatorConfig.class);
     }
 
+    @Override
     public boolean taskComplete() {
         return isTaskComplete;
     }
 
+    /**
+     * Runs the implemented task
+     */
+    @Override
     public void run() {
-        System.out.println("RUNNING");
-        System.out.println("year: " + year + "\tschedules: " + schedules);
         if (Objects.nonNull(year) && Objects.nonNull(schedules)) {
 
             if (schedules.isEmpty()) {
@@ -75,21 +77,24 @@ public class JsonRetreiver {
             WebTarget target = client.target(BASE_NFL_LINK).path(path)
                     .path(sched.getGameDate()).path(sched.getGameDate() + "_gtd" + FORMAT);
 
-            //String nflData = target.request(MediaType.APPLICATION_JSON_TYPE).get(String.class);
             Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
-            System.out.println(response);
             if (response.getStatus() == 200) {
                 String nflData = response.readEntity(String.class);
-                System.out.println(nflData);
+
                 GameData gd = ctx.getBean(GameData.class);
+                GameDataPK gdPK = ctx.getBean(GameDataPK.class);
 
                 String identifier = nflData.substring(2, 12);
-                gd.setGameIdentifier(identifier);
-                gd.setGame(nflData);
-                gd.setYear(year);
+                gdPK.setGameIdentifier(identifier);
+                gdPK.setYear(year);
 
+                gd.setGameDataPK(gdPK);
+
+                gd.setGame(nflData);
                 gdr.create(gd);
+
+                GameData gdTest = gdr.find(gdPK);
             }
         }
     }

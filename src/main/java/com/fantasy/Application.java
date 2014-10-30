@@ -5,10 +5,9 @@
  */
 package com.fantasy;
 
+import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.workers.JsonRetreiver;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.boot.SpringApplication;
@@ -23,8 +22,8 @@ public class Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext context;
         context = SpringApplication.run(AggregatorConfig.class);
-        JsonRetreiver jsonRetreiver = context.getBean(JsonRetreiver.class);
-        jsonRetreiver.setSearchYear(2013);
+        Task jsonRetreiver = context.getBean(JsonRetreiver.class);
+        ((JsonRetreiver) jsonRetreiver).setSearchYear(2013);
         try {
             while (!jsonRetreiver.taskComplete()) {
                 jsonRetreiver.run();

@@ -115,7 +115,16 @@
             <artifactId>postgresql</artifactId>
             <version>9.3-1102-jdbc41</version>
         </dependency>
-        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>org.json</artifactId>
+            <version>chargebee-1.0</version>
+        </dependency>
     </dependencies>
     
     <build>

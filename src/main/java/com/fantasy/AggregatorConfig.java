@@ -32,6 +32,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.eclipse.persistence.config.EntityManagerProperties;
+import org.json.JSONObject;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -48,6 +49,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration()
 @EnableTransactionManagement
 public class AggregatorConfig {
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public JSONObject jsonObject(){
+        return new JSONObject();
+    }
     
     @Bean
     public SimpleDateFormat simpleDateFormat(){

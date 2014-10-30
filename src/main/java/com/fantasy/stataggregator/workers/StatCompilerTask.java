@@ -6,6 +6,8 @@
 package com.fantasy.stataggregator.workers;
 
 import com.fantasy.stataggregator.Task;
+import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * StatCompilerTask compiles game statistics into whole season statistics for each player<br>
@@ -15,6 +17,11 @@ import com.fantasy.stataggregator.Task;
  * @author Mac
  */
 public class StatCompilerTask implements Task{
+    
+    @Autowired
+    private GameDataRepository gdr;
+    
+    
 
     @Override
     public boolean taskComplete() {

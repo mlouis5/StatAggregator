@@ -1,0 +1,148 @@
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class RunningBack {
+
+@Expose
+private String name;
+@Expose
+private int att;
+@Expose
+private int yds;
+@Expose
+private int tds;
+@Expose
+private int lng;
+@Expose
+private int lngtd;
+@Expose
+private int twopta;
+@Expose
+private int twoptm;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public RunningBack withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getAtt() {
+return att;
+}
+
+public void setAtt(int att) {
+this.att = att;
+}
+
+public RunningBack withAtt(int att) {
+this.att = att;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public RunningBack withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public RunningBack withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public RunningBack withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+public int getLngtd() {
+return lngtd;
+}
+
+public void setLngtd(int lngtd) {
+this.lngtd = lngtd;
+}
+
+public RunningBack withLngtd(int lngtd) {
+this.lngtd = lngtd;
+return this;
+}
+
+public int getTwopta() {
+return twopta;
+}
+
+public void setTwopta(int twopta) {
+this.twopta = twopta;
+}
+
+public RunningBack withTwopta(int twopta) {
+this.twopta = twopta;
+return this;
+}
+
+public int getTwoptm() {
+return twoptm;
+}
+
+public void setTwoptm(int twoptm) {
+this.twoptm = twoptm;
+}
+
+public RunningBack withTwoptm(int twoptm) {
+this.twoptm = twoptm;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}

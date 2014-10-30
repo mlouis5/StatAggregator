@@ -65,7 +65,8 @@ public class GameDataRetrieverTask implements Task {
 
     /**
      * Sets the statistical year to be requested.
-     * @param year 
+     *
+     * @param year
      */
     public void setSearchYear(int year) {
         this.year = year;
@@ -90,14 +91,15 @@ public class GameDataRetrieverTask implements Task {
     }
 
     /**
-     * Retrieves a JSON String representing a single NFL game played,
-     * on a given day. Then save this data to the database, uniquely<br>
+     * Retrieves a JSON String representing a single NFL game played, on a given
+     * day. Then save this data to the database, uniquely<br>
      * identified by the schedule. each schedule occurs on a given date<br>
      * in the format yyyyMMdd\d{2}, where \d{2} is a two digit number<br>
-     * identifying 1 of n games played that day (range 00 - 15 or fewer).<br><br>
-     * 
-     * run retrieves one game at a time, it is up the the controlling class,
-     * to recursively call this method.
+     * identifying 1 of n games played that day (range 00 - 15 or
+     * fewer).<br><br>
+     *
+     * run retrieves one game at a time, it is up the the controlling class, to
+     * recursively call this method.
      */
     @Override
     public void run() {
@@ -106,59 +108,28 @@ public class GameDataRetrieverTask implements Task {
                 isTaskComplete = true;
                 return;
             }
-
+            //get the earliest scheduled game
             NflSchedule sched = schedules.remove(FIRST_INDEX);
 
             //if this NflSchedule is in the past, proceed
-            if (hasBeenPlayed(sched)) {
+            if (Objects.nonNull(sched) && hasBeenPlayed(sched)) {
                 Response response = requestData(sched);
 
                 //if request was successful, proceed with saving data.
                 if (response.getStatus() == Response.Status.OK.getStatusCode()) {
                     String nflData = response.readEntity(String.class);
 
-                    String identifier = findIdentifier(sched.getGameDate(), nflData);
-
-                    //If identifier was found, persist data.
-                    if (Objects.nonNull(identifier) && !identifier.isEmpty()) {
-                        persistGameData(identifier, nflData);
-                    }
+                    persistGameData(sched.getGameDate(), nflData);
                 }
             }
-
         }
-    }
-
-    /**
-     * Retrieves this Games identifier which is a date plus game order<br>
-     * Format: yyyyMMdd\d{2}
-     * @param gameSchedule
-     * @param nflData
-     * @return 
-     */
-    private String findIdentifier(String gameSchedule, String nflData) {
-        String identifier = null;
-        try {
-            JSONObject jsonOb = new JSONObject(nflData);
-            Iterator iter = jsonOb.keys();
-
-            while (iter.hasNext()) {
-                Object key = iter.next();
-                if (key.toString().equals(gameSchedule)) {
-                    identifier = key.toString();
-                    break;
-                }
-            }
-        } catch (JSONException ex) {
-            Logger.getLogger(GameDataRetrieverTask.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return identifier;
     }
 
     /**
      * Make a request to nfl.com for the data identified by the NflSchedule
+     *
      * @param sched
-     * @return 
+     * @return
      */
     private Response requestData(NflSchedule sched) {
         WebTarget target = client.target(BASE_NFL_LINK).path(path)
@@ -170,18 +141,22 @@ public class GameDataRetrieverTask implements Task {
     /**
      * Determines if a game has already been played, No current game data<br>
      * will be pulled, since the statistics aren't final.
+     *
      * @param sched
-     * @return 
+     * @return
      */
     private boolean hasBeenPlayed(NflSchedule sched) {
         try {
-            String schedDate = sched.getGameDate().substring(0, 8);
-            Date date = sdf.parse(schedDate);
+            String gameDate = sched.getGameDate();
+            if (Objects.nonNull(gameDate) && !gameDate.isEmpty()) {
+                String schedDate = gameDate.substring(0, 8);
+                Date date = sdf.parse(schedDate);
 
-            LocalDate dateOnly = LocalDateTime.ofInstant(
-                    date.toInstant(), ZoneId.systemDefault()).toLocalDate();
+                LocalDate dateOnly = LocalDateTime.ofInstant(
+                        date.toInstant(), ZoneId.systemDefault()).toLocalDate();
 
-            return dateOnly.isBefore(LocalDate.now());
+                return dateOnly.isBefore(LocalDate.now());
+            }
         } catch (ParseException ex) {
             Logger.getLogger(GameDataRetrieverTask.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -191,8 +166,9 @@ public class GameDataRetrieverTask implements Task {
     /**
      * Saves the game data as a single long text string in the database<br>
      * to be processed later.
+     *
      * @param identifier
-     * @param nflData 
+     * @param nflData
      */
     private void persistGameData(String identifier, String nflData) {
         GameData gd = ctx.getBean(GameData.class);

@@ -1,0 +1,197 @@
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Passer {
+
+@Expose
+private String name;
+@Expose
+private int att;
+@Expose
+private int cmp;
+@Expose
+private int yds;
+@Expose
+private int tds;
+@Expose
+private int ints;
+@Expose
+private int twopta;
+@Expose
+private int twoptm;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Passer withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getAtt() {
+return att;
+}
+
+public void setAtt(int att) {
+this.att = att;
+}
+
+public Passer withAtt(int att) {
+this.att = att;
+return this;
+}
+
+public int getCmp() {
+return cmp;
+}
+
+public void setCmp(int cmp) {
+this.cmp = cmp;
+}
+
+public Passer withCmp(int cmp) {
+this.cmp = cmp;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Passer withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public Passer withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getInts() {
+return ints;
+}
+
+public void setInts(int ints) {
+this.ints = ints;
+}
+
+public Passer withInts(int ints) {
+this.ints = ints;
+return this;
+}
+
+public int getTwopta() {
+return twopta;
+}
+
+public void setTwopta(int twopta) {
+this.twopta = twopta;
+}
+
+public Passer withTwopta(int twopta) {
+this.twopta = twopta;
+return this;
+}
+
+public int getTwoptm() {
+return twoptm;
+}
+
+public void setTwoptm(int twoptm) {
+this.twoptm = twoptm;
+}
+
+public Passer withTwoptm(int twoptm) {
+this.twoptm = twoptm;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Passing.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Passing {
+
+@Expose
+@Valid
+private List<Passer> passer = new ArrayList<Passer>();
+
+public List<Passer> getPasser() {
+return passer;
+}
+
+public void setPasser(List<Passer> passer) {
+this.passer = passer;
+}
+
+public Passing withPasser(List<Passer> passer) {
+this.passer = passer;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}

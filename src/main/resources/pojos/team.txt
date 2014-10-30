@@ -1,0 +1,193 @@
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Team {
+
+@Expose
+private int totfd;
+@Expose
+private int totyds;
+@Expose
+private int pyds;
+@Expose
+private int ryds;
+@Expose
+private int pen;
+@Expose
+private int penyds;
+@Expose
+private int trnovr;
+@Expose
+private int pt;
+@Expose
+private int ptyds;
+@Expose
+private int ptavg;
+@Expose
+private String top;
+
+public int getTotfd() {
+return totfd;
+}
+
+public void setTotfd(int totfd) {
+this.totfd = totfd;
+}
+
+public Team withTotfd(int totfd) {
+this.totfd = totfd;
+return this;
+}
+
+public int getTotyds() {
+return totyds;
+}
+
+public void setTotyds(int totyds) {
+this.totyds = totyds;
+}
+
+public Team withTotyds(int totyds) {
+this.totyds = totyds;
+return this;
+}
+
+public int getPyds() {
+return pyds;
+}
+
+public void setPyds(int pyds) {
+this.pyds = pyds;
+}
+
+public Team withPyds(int pyds) {
+this.pyds = pyds;
+return this;
+}
+
+public int getRyds() {
+return ryds;
+}
+
+public void setRyds(int ryds) {
+this.ryds = ryds;
+}
+
+public Team withRyds(int ryds) {
+this.ryds = ryds;
+return this;
+}
+
+public int getPen() {
+return pen;
+}
+
+public void setPen(int pen) {
+this.pen = pen;
+}
+
+public Team withPen(int pen) {
+this.pen = pen;
+return this;
+}
+
+public int getPenyds() {
+return penyds;
+}
+
+public void setPenyds(int penyds) {
+this.penyds = penyds;
+}
+
+public Team withPenyds(int penyds) {
+this.penyds = penyds;
+return this;
+}
+
+public int getTrnovr() {
+return trnovr;
+}
+
+public void setTrnovr(int trnovr) {
+this.trnovr = trnovr;
+}
+
+public Team withTrnovr(int trnovr) {
+this.trnovr = trnovr;
+return this;
+}
+
+public int getPt() {
+return pt;
+}
+
+public void setPt(int pt) {
+this.pt = pt;
+}
+
+public Team withPt(int pt) {
+this.pt = pt;
+return this;
+}
+
+public int getPtyds() {
+return ptyds;
+}
+
+public void setPtyds(int ptyds) {
+this.ptyds = ptyds;
+}
+
+public Team withPtyds(int ptyds) {
+this.ptyds = ptyds;
+return this;
+}
+
+public int getPtavg() {
+return ptavg;
+}
+
+public void setPtavg(int ptavg) {
+this.ptavg = ptavg;
+}
+
+public Team withPtavg(int ptavg) {
+this.ptavg = ptavg;
+return this;
+}
+
+public String getTop() {
+return top;
+}
+
+public void setTop(String top) {
+this.top = top;
+}
+
+public Team withTop(String top) {
+this.top = top;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}

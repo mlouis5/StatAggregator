@@ -1,0 +1,2135 @@
+Fork me on GitHub
+jsonschema2pojo
+Generate Plain Old Java Objects from JSON or JSON-Schema.
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+{  
+                "passing":{  
+                    "Passer":{  
+                        "name":"M.Ryan",
+                        "att":27,
+                        "cmp":20,
+                        "yds":228,
+                        "tds":2,
+                        "ints":1,
+                        "twopta":0,
+                        "twoptm":0
+                    }
+                },
+                "rushing":{  
+                    "rusher":{  
+                        "name":"S.Jackson",
+                        "att":18,
+                        "yds":60,
+                        "tds":1,
+                        "lng":13,
+                        "lngtd":1,
+                        "twopta":0,
+                        "twoptm":0
+                    }
+                },
+                "receiving":{  
+                    "receiver":{  
+                        "name":"R.White",
+                        "rec":5,
+                        "yds":66,
+                        "tds":0,
+                        "lng":24,
+                        "lngtd":0,
+                        "twopta":0,
+                        "twoptm":0
+                    }
+                },
+                "fumbles":{  
+                    "fumbler":{  
+                        "name":"M.Ryan",
+                        "tot":2,
+                        "rcv":0,
+                        "trcv":0,
+                        "yds":0,
+                        "lost":0
+                    }
+                },
+                "kicking":{  
+                    "kicker":{  
+                        "name":"M.Bryant",
+                        "fgm":0,
+                        "fga":0,
+                        "fgyds":0,
+                        "totpfg":0,
+                        "xpmade":3,
+                        "xpmissed":0,
+                        "xpa":3,
+                        "xpb":0,
+                        "xptot":3
+                    }
+                },
+                "punting":{  
+                    "punter":{ 
+                        "id":"00-0028130",
+                        "name":"M.Bosher",
+                        "pts":4,
+                        "yds":153,
+                        "avg":38,
+                        "i20":1,
+                        "lng":50
+                    }
+                },
+                "kickret":{  
+                    "kick_returner":{
+                        "id":"00-0024272",
+                        "name":"D.Hester",
+                        "ret":2,
+                        "avg":22,
+                        "tds":0,
+                        "lng":28,
+                        "lngtd":0
+                    }
+                },
+                "puntret":{  
+                    "punt_returner":{  
+                        "id":"00-0024272",
+                        "name":"D.Hester",
+                        "ret":1,
+                        "avg":20,
+                        "tds":0,
+                        "lng":20,
+                        "lngtd":0
+                    }
+                },
+                "defense":{  
+                    "defender":{ 
+                        "id":"00-0030427",
+                        "name":"K.Ishmael",
+                        "tkl":6,
+                        "ast":0,
+                        "sk":0,
+                        "int":0,
+                        "ffum":0
+                    }
+                }
+            }
+Package  
+Class name  
+Source type:
+JSON Schema   JSON
+Annotation style:
+Jackson 2.x   Jackson 1.x
+Gson   None
+Generate builder methods
+Use primitive types
+Use long integers
+Use double numbers
+Use Joda dates
+Use Commons-Lang3
+Include hashCode and equals
+Include toString
+Include JSR-303 annotations
+Property word delimiters:  
+Preview  Jar
+×
+Preview
+-----------------------------------com.fantasy.stataggregator.pojo.Defender.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Defender {
+
+@Expose
+private String id;
+@Expose
+private String name;
+@Expose
+private int tkl;
+@Expose
+private int ast;
+@Expose
+private int sk;
+@SerializedName("int")
+@Expose
+private int _int;
+@Expose
+private int ffum;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public Defender withId(String id) {
+this.id = id;
+return this;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Defender withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getTkl() {
+return tkl;
+}
+
+public void setTkl(int tkl) {
+this.tkl = tkl;
+}
+
+public Defender withTkl(int tkl) {
+this.tkl = tkl;
+return this;
+}
+
+public int getAst() {
+return ast;
+}
+
+public void setAst(int ast) {
+this.ast = ast;
+}
+
+public Defender withAst(int ast) {
+this.ast = ast;
+return this;
+}
+
+public int getSk() {
+return sk;
+}
+
+public void setSk(int sk) {
+this.sk = sk;
+}
+
+public Defender withSk(int sk) {
+this.sk = sk;
+return this;
+}
+
+public int getInt() {
+return _int;
+}
+
+public void setInt(int _int) {
+this._int = _int;
+}
+
+public Defender withInt(int _int) {
+this._int = _int;
+return this;
+}
+
+public int getFfum() {
+return ffum;
+}
+
+public void setFfum(int ffum) {
+this.ffum = ffum;
+}
+
+public Defender withFfum(int ffum) {
+this.ffum = ffum;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Defense.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Defense {
+
+@Expose
+@Valid
+private Defender defender;
+
+public Defender getDefender() {
+return defender;
+}
+
+public void setDefender(Defender defender) {
+this.defender = defender;
+}
+
+public Defense withDefender(Defender defender) {
+this.defender = defender;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Fumbler.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Fumbler {
+
+@Expose
+private String name;
+@Expose
+private int tot;
+@Expose
+private int rcv;
+@Expose
+private int trcv;
+@Expose
+private int yds;
+@Expose
+private int lost;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Fumbler withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getTot() {
+return tot;
+}
+
+public void setTot(int tot) {
+this.tot = tot;
+}
+
+public Fumbler withTot(int tot) {
+this.tot = tot;
+return this;
+}
+
+public int getRcv() {
+return rcv;
+}
+
+public void setRcv(int rcv) {
+this.rcv = rcv;
+}
+
+public Fumbler withRcv(int rcv) {
+this.rcv = rcv;
+return this;
+}
+
+public int getTrcv() {
+return trcv;
+}
+
+public void setTrcv(int trcv) {
+this.trcv = trcv;
+}
+
+public Fumbler withTrcv(int trcv) {
+this.trcv = trcv;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Fumbler withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getLost() {
+return lost;
+}
+
+public void setLost(int lost) {
+this.lost = lost;
+}
+
+public Fumbler withLost(int lost) {
+this.lost = lost;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Fumbles.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Fumbles {
+
+@Expose
+@Valid
+private Fumbler fumbler;
+
+public Fumbler getFumbler() {
+return fumbler;
+}
+
+public void setFumbler(Fumbler fumbler) {
+this.fumbler = fumbler;
+}
+
+public Fumbles withFumbler(Fumbler fumbler) {
+this.fumbler = fumbler;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.KickReturner.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class KickReturner {
+
+@Expose
+private String id;
+@Expose
+private String name;
+@Expose
+private int ret;
+@Expose
+private int avg;
+@Expose
+private int tds;
+@Expose
+private int lng;
+@Expose
+private int lngtd;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public KickReturner withId(String id) {
+this.id = id;
+return this;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public KickReturner withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getRet() {
+return ret;
+}
+
+public void setRet(int ret) {
+this.ret = ret;
+}
+
+public KickReturner withRet(int ret) {
+this.ret = ret;
+return this;
+}
+
+public int getAvg() {
+return avg;
+}
+
+public void setAvg(int avg) {
+this.avg = avg;
+}
+
+public KickReturner withAvg(int avg) {
+this.avg = avg;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public KickReturner withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public KickReturner withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+public int getLngtd() {
+return lngtd;
+}
+
+public void setLngtd(int lngtd) {
+this.lngtd = lngtd;
+}
+
+public KickReturner withLngtd(int lngtd) {
+this.lngtd = lngtd;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Kicker.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Kicker {
+
+@Expose
+private String name;
+@Expose
+private int fgm;
+@Expose
+private int fga;
+@Expose
+private int fgyds;
+@Expose
+private int totpfg;
+@Expose
+private int xpmade;
+@Expose
+private int xpmissed;
+@Expose
+private int xpa;
+@Expose
+private int xpb;
+@Expose
+private int xptot;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Kicker withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getFgm() {
+return fgm;
+}
+
+public void setFgm(int fgm) {
+this.fgm = fgm;
+}
+
+public Kicker withFgm(int fgm) {
+this.fgm = fgm;
+return this;
+}
+
+public int getFga() {
+return fga;
+}
+
+public void setFga(int fga) {
+this.fga = fga;
+}
+
+public Kicker withFga(int fga) {
+this.fga = fga;
+return this;
+}
+
+public int getFgyds() {
+return fgyds;
+}
+
+public void setFgyds(int fgyds) {
+this.fgyds = fgyds;
+}
+
+public Kicker withFgyds(int fgyds) {
+this.fgyds = fgyds;
+return this;
+}
+
+public int getTotpfg() {
+return totpfg;
+}
+
+public void setTotpfg(int totpfg) {
+this.totpfg = totpfg;
+}
+
+public Kicker withTotpfg(int totpfg) {
+this.totpfg = totpfg;
+return this;
+}
+
+public int getXpmade() {
+return xpmade;
+}
+
+public void setXpmade(int xpmade) {
+this.xpmade = xpmade;
+}
+
+public Kicker withXpmade(int xpmade) {
+this.xpmade = xpmade;
+return this;
+}
+
+public int getXpmissed() {
+return xpmissed;
+}
+
+public void setXpmissed(int xpmissed) {
+this.xpmissed = xpmissed;
+}
+
+public Kicker withXpmissed(int xpmissed) {
+this.xpmissed = xpmissed;
+return this;
+}
+
+public int getXpa() {
+return xpa;
+}
+
+public void setXpa(int xpa) {
+this.xpa = xpa;
+}
+
+public Kicker withXpa(int xpa) {
+this.xpa = xpa;
+return this;
+}
+
+public int getXpb() {
+return xpb;
+}
+
+public void setXpb(int xpb) {
+this.xpb = xpb;
+}
+
+public Kicker withXpb(int xpb) {
+this.xpb = xpb;
+return this;
+}
+
+public int getXptot() {
+return xptot;
+}
+
+public void setXptot(int xptot) {
+this.xptot = xptot;
+}
+
+public Kicker withXptot(int xptot) {
+this.xptot = xptot;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Kicking.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Kicking {
+
+@Expose
+@Valid
+private Kicker kicker;
+
+public Kicker getKicker() {
+return kicker;
+}
+
+public void setKicker(Kicker kicker) {
+this.kicker = kicker;
+}
+
+public Kicking withKicker(Kicker kicker) {
+this.kicker = kicker;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Kickret.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Kickret {
+
+@SerializedName("kick_returner")
+@Expose
+@Valid
+private KickReturner kickReturner;
+
+public KickReturner getKickReturner() {
+return kickReturner;
+}
+
+public void setKickReturner(KickReturner kickReturner) {
+this.kickReturner = kickReturner;
+}
+
+public Kickret withKickReturner(KickReturner kickReturner) {
+this.kickReturner = kickReturner;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Passer.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Passer {
+
+@Expose
+private String name;
+@Expose
+private int att;
+@Expose
+private int cmp;
+@Expose
+private int yds;
+@Expose
+private int tds;
+@Expose
+private int ints;
+@Expose
+private int twopta;
+@Expose
+private int twoptm;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Passer withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getAtt() {
+return att;
+}
+
+public void setAtt(int att) {
+this.att = att;
+}
+
+public Passer withAtt(int att) {
+this.att = att;
+return this;
+}
+
+public int getCmp() {
+return cmp;
+}
+
+public void setCmp(int cmp) {
+this.cmp = cmp;
+}
+
+public Passer withCmp(int cmp) {
+this.cmp = cmp;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Passer withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public Passer withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getInts() {
+return ints;
+}
+
+public void setInts(int ints) {
+this.ints = ints;
+}
+
+public Passer withInts(int ints) {
+this.ints = ints;
+return this;
+}
+
+public int getTwopta() {
+return twopta;
+}
+
+public void setTwopta(int twopta) {
+this.twopta = twopta;
+}
+
+public Passer withTwopta(int twopta) {
+this.twopta = twopta;
+return this;
+}
+
+public int getTwoptm() {
+return twoptm;
+}
+
+public void setTwoptm(int twoptm) {
+this.twoptm = twoptm;
+}
+
+public Passer withTwoptm(int twoptm) {
+this.twoptm = twoptm;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Passing.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Passing {
+
+@SerializedName("Passer")
+@Expose
+@Valid
+private Passer passer;
+
+public Passer getPasser() {
+return passer;
+}
+
+public void setPasser(Passer passer) {
+this.passer = passer;
+}
+
+public Passing withPasser(Passer passer) {
+this.passer = passer;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.PuntReturner.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class PuntReturner {
+
+@Expose
+private String id;
+@Expose
+private String name;
+@Expose
+private int ret;
+@Expose
+private int avg;
+@Expose
+private int tds;
+@Expose
+private int lng;
+@Expose
+private int lngtd;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public PuntReturner withId(String id) {
+this.id = id;
+return this;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public PuntReturner withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getRet() {
+return ret;
+}
+
+public void setRet(int ret) {
+this.ret = ret;
+}
+
+public PuntReturner withRet(int ret) {
+this.ret = ret;
+return this;
+}
+
+public int getAvg() {
+return avg;
+}
+
+public void setAvg(int avg) {
+this.avg = avg;
+}
+
+public PuntReturner withAvg(int avg) {
+this.avg = avg;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public PuntReturner withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public PuntReturner withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+public int getLngtd() {
+return lngtd;
+}
+
+public void setLngtd(int lngtd) {
+this.lngtd = lngtd;
+}
+
+public PuntReturner withLngtd(int lngtd) {
+this.lngtd = lngtd;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Punter.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Punter {
+
+@Expose
+private String id;
+@Expose
+private String name;
+@Expose
+private int pts;
+@Expose
+private int yds;
+@Expose
+private int avg;
+@Expose
+private int i20;
+@Expose
+private int lng;
+
+public String getId() {
+return id;
+}
+
+public void setId(String id) {
+this.id = id;
+}
+
+public Punter withId(String id) {
+this.id = id;
+return this;
+}
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Punter withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getPts() {
+return pts;
+}
+
+public void setPts(int pts) {
+this.pts = pts;
+}
+
+public Punter withPts(int pts) {
+this.pts = pts;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Punter withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getAvg() {
+return avg;
+}
+
+public void setAvg(int avg) {
+this.avg = avg;
+}
+
+public Punter withAvg(int avg) {
+this.avg = avg;
+return this;
+}
+
+public int getI20() {
+return i20;
+}
+
+public void setI20(int i20) {
+this.i20 = i20;
+}
+
+public Punter withI20(int i20) {
+this.i20 = i20;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public Punter withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Punting.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Punting {
+
+@Expose
+@Valid
+private Punter punter;
+
+public Punter getPunter() {
+return punter;
+}
+
+public void setPunter(Punter punter) {
+this.punter = punter;
+}
+
+public Punting withPunter(Punter punter) {
+this.punter = punter;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Puntret.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Puntret {
+
+@SerializedName("punt_returner")
+@Expose
+@Valid
+private PuntReturner puntReturner;
+
+public PuntReturner getPuntReturner() {
+return puntReturner;
+}
+
+public void setPuntReturner(PuntReturner puntReturner) {
+this.puntReturner = puntReturner;
+}
+
+public Puntret withPuntReturner(PuntReturner puntReturner) {
+this.puntReturner = puntReturner;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Receiver.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Receiver {
+
+@Expose
+private String name;
+@Expose
+private int rec;
+@Expose
+private int yds;
+@Expose
+private int tds;
+@Expose
+private int lng;
+@Expose
+private int lngtd;
+@Expose
+private int twopta;
+@Expose
+private int twoptm;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Receiver withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getRec() {
+return rec;
+}
+
+public void setRec(int rec) {
+this.rec = rec;
+}
+
+public Receiver withRec(int rec) {
+this.rec = rec;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Receiver withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public Receiver withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public Receiver withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+public int getLngtd() {
+return lngtd;
+}
+
+public void setLngtd(int lngtd) {
+this.lngtd = lngtd;
+}
+
+public Receiver withLngtd(int lngtd) {
+this.lngtd = lngtd;
+return this;
+}
+
+public int getTwopta() {
+return twopta;
+}
+
+public void setTwopta(int twopta) {
+this.twopta = twopta;
+}
+
+public Receiver withTwopta(int twopta) {
+this.twopta = twopta;
+return this;
+}
+
+public int getTwoptm() {
+return twoptm;
+}
+
+public void setTwoptm(int twoptm) {
+this.twoptm = twoptm;
+}
+
+public Receiver withTwoptm(int twoptm) {
+this.twoptm = twoptm;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Receiving.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Receiving {
+
+@Expose
+@Valid
+private Receiver receiver;
+
+public Receiver getReceiver() {
+return receiver;
+}
+
+public void setReceiver(Receiver receiver) {
+this.receiver = receiver;
+}
+
+public Receiving withReceiver(Receiver receiver) {
+this.receiver = receiver;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Rusher.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Rusher {
+
+@Expose
+private String name;
+@Expose
+private int att;
+@Expose
+private int yds;
+@Expose
+private int tds;
+@Expose
+private int lng;
+@Expose
+private int lngtd;
+@Expose
+private int twopta;
+@Expose
+private int twoptm;
+
+public String getName() {
+return name;
+}
+
+public void setName(String name) {
+this.name = name;
+}
+
+public Rusher withName(String name) {
+this.name = name;
+return this;
+}
+
+public int getAtt() {
+return att;
+}
+
+public void setAtt(int att) {
+this.att = att;
+}
+
+public Rusher withAtt(int att) {
+this.att = att;
+return this;
+}
+
+public int getYds() {
+return yds;
+}
+
+public void setYds(int yds) {
+this.yds = yds;
+}
+
+public Rusher withYds(int yds) {
+this.yds = yds;
+return this;
+}
+
+public int getTds() {
+return tds;
+}
+
+public void setTds(int tds) {
+this.tds = tds;
+}
+
+public Rusher withTds(int tds) {
+this.tds = tds;
+return this;
+}
+
+public int getLng() {
+return lng;
+}
+
+public void setLng(int lng) {
+this.lng = lng;
+}
+
+public Rusher withLng(int lng) {
+this.lng = lng;
+return this;
+}
+
+public int getLngtd() {
+return lngtd;
+}
+
+public void setLngtd(int lngtd) {
+this.lngtd = lngtd;
+}
+
+public Rusher withLngtd(int lngtd) {
+this.lngtd = lngtd;
+return this;
+}
+
+public int getTwopta() {
+return twopta;
+}
+
+public void setTwopta(int twopta) {
+this.twopta = twopta;
+}
+
+public Rusher withTwopta(int twopta) {
+this.twopta = twopta;
+return this;
+}
+
+public int getTwoptm() {
+return twoptm;
+}
+
+public void setTwoptm(int twoptm) {
+this.twoptm = twoptm;
+}
+
+public Rusher withTwoptm(int twoptm) {
+this.twoptm = twoptm;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Rushing.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Rushing {
+
+@Expose
+@Valid
+private Rusher rusher;
+
+public Rusher getRusher() {
+return rusher;
+}
+
+public void setRusher(Rusher rusher) {
+this.rusher = rusher;
+}
+
+public Rushing withRusher(Rusher rusher) {
+this.rusher = rusher;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+-----------------------------------com.fantasy.stataggregator.pojo.Statistics.java-----------------------------------
+
+package com.fantasy.stataggregator.pojo;
+
+import javax.annotation.Generated;
+import javax.validation.Valid;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+@Generated("org.jsonschema2pojo")
+public class Statistics {
+
+@Expose
+@Valid
+private Passing passing;
+@Expose
+@Valid
+private Rushing rushing;
+@Expose
+@Valid
+private Receiving receiving;
+@Expose
+@Valid
+private Fumbles fumbles;
+@Expose
+@Valid
+private Kicking kicking;
+@Expose
+@Valid
+private Punting punting;
+@Expose
+@Valid
+private Kickret kickret;
+@Expose
+@Valid
+private Puntret puntret;
+@Expose
+@Valid
+private Defense defense;
+
+public Passing getPassing() {
+return passing;
+}
+
+public void setPassing(Passing passing) {
+this.passing = passing;
+}
+
+public Statistics withPassing(Passing passing) {
+this.passing = passing;
+return this;
+}
+
+public Rushing getRushing() {
+return rushing;
+}
+
+public void setRushing(Rushing rushing) {
+this.rushing = rushing;
+}
+
+public Statistics withRushing(Rushing rushing) {
+this.rushing = rushing;
+return this;
+}
+
+public Receiving getReceiving() {
+return receiving;
+}
+
+public void setReceiving(Receiving receiving) {
+this.receiving = receiving;
+}
+
+public Statistics withReceiving(Receiving receiving) {
+this.receiving = receiving;
+return this;
+}
+
+public Fumbles getFumbles() {
+return fumbles;
+}
+
+public void setFumbles(Fumbles fumbles) {
+this.fumbles = fumbles;
+}
+
+public Statistics withFumbles(Fumbles fumbles) {
+this.fumbles = fumbles;
+return this;
+}
+
+public Kicking getKicking() {
+return kicking;
+}
+
+public void setKicking(Kicking kicking) {
+this.kicking = kicking;
+}
+
+public Statistics withKicking(Kicking kicking) {
+this.kicking = kicking;
+return this;
+}
+
+public Punting getPunting() {
+return punting;
+}
+
+public void setPunting(Punting punting) {
+this.punting = punting;
+}
+
+public Statistics withPunting(Punting punting) {
+this.punting = punting;
+return this;
+}
+
+public Kickret getKickret() {
+return kickret;
+}
+
+public void setKickret(Kickret kickret) {
+this.kickret = kickret;
+}
+
+public Statistics withKickret(Kickret kickret) {
+this.kickret = kickret;
+return this;
+}
+
+public Puntret getPuntret() {
+return puntret;
+}
+
+public void setPuntret(Puntret puntret) {
+this.puntret = puntret;
+}
+
+public Statistics withPuntret(Puntret puntret) {
+this.puntret = puntret;
+return this;
+}
+
+public Defense getDefense() {
+return defense;
+}
+
+public void setDefense(Defense defense) {
+this.defense = defense;
+}
+
+public Statistics withDefense(Defense defense) {
+this.defense = defense;
+return this;
+}
+
+@Override
+public String toString() {
+return ToStringBuilder.reflectionToString(this);
+}
+
+@Override
+public int hashCode() {
+return HashCodeBuilder.reflectionHashCode(this);
+}
+
+@Override
+public boolean equals(Object other) {
+return EqualsBuilder.reflectionEquals(this, other);
+}
+
+}
+Use this tool offline: Maven plugin Gradle plugin Ant task CLI Java API
+ Copyright © 2012-2014 Joe Littlejohn Bugs?

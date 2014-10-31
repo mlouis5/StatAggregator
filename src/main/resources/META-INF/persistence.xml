@@ -4,6 +4,10 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.fantasy.stataggregator.entities.NflSchedule</class>
     <class>com.fantasy.stataggregator.entities.GameData</class>
+    <class>com.fantasy.stataggregator.entities.PlayerAthlete</class>
+    <class>com.fantasy.stataggregator.entities.Player</class>
+    <class>com.fantasy.stataggregator.entities.Statistic</class>
+    <class>com.fantasy.stataggregator.entities.GameSchedule</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://127.0.0.1:5432/fantasy"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

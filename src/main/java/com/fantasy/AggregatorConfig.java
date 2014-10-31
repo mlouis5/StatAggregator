@@ -7,6 +7,7 @@ package com.fantasy;
 
 import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.GameDataPK;
+import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
 import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
@@ -49,6 +50,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration()
 @EnableTransactionManagement
 public class AggregatorConfig {
+    
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public GameSchedule gameSchedule(){
+        return new GameSchedule();
+    }
     
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)

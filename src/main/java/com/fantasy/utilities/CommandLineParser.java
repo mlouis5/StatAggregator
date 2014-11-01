@@ -8,8 +8,10 @@ package com.fantasy.utilities;
 /**
  *
  * @author MacDerson
+ * @param <T>
+ * @param <V>
  */
-public interface CommandLineParser {
+public interface CommandLineParser<T extends CommandLineFlag, V extends CommandLineContainer> {
     
-    CommandLineContainer parseFor(CommandLineFlag<? extends Enum> flag);
+    V parseFor(Class<T> flag, String[] args) throws Exception;
 }

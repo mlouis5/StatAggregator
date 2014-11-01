@@ -11,6 +11,11 @@ import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import com.fantasy.stataggregator.entities.dao.impl.GameScheduleRepository;
 import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
+import com.fantasy.utilities.CommandLineContainer;
+import com.fantasy.utilities.CommandLineFlag;
+import com.fantasy.utilities.containers.YearContainer;
+import com.fantasy.utilities.flags.YearFlag;
+import com.fantasy.utilities.parsers.SpaceDelimitedCommandLineParser;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
@@ -155,5 +160,10 @@ public class AggregatorConfig {
         properties.setProperty(EntityManagerProperties.PERSISTENCE_CONTEXT_PERSIST_ON_COMMIT, "true");
         properties.setProperty("eclipselink.weaving", "false");
         return properties;
+    }
+    
+    @Bean
+    public SpaceDelimitedCommandLineParser<YearFlag, YearContainer> gameDataFlag(){
+        return new SpaceDelimitedCommandLineParser<YearFlag, YearContainer>();
     }
 }

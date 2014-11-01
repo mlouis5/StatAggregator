@@ -11,14 +11,25 @@ import java.util.regex.Pattern;
  *
  * @author MacDerson
  * @param <T>
+ * @param <C>
  */
-public interface CommandLineFlag<T extends Enum> {
+public interface CommandLineFlag<T extends Enum, C extends CommandLineContainer> {
     
-    String value();
+    Pattern value();
     
     Pattern captureFormat();
+    
+    default boolean matches(Pattern p, String input){
+        return p.matcher(input).matches();
+    }
+    
+    default boolean isFlag(String input){
+        return input.matches("^((-)|(--).*)$");
+    }
     
     boolean capturesData(); 
     
     T[] overrides();
+    
+    Class<C> forContainer();
 }

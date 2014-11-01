@@ -7,6 +7,9 @@ package com.fantasy;
 
 import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
+import com.fantasy.utilities.containers.YearContainer;
+import com.fantasy.utilities.flags.YearFlag;
+import com.fantasy.utilities.parsers.SpaceDelimitedCommandLineParser;
 import java.text.ParseException;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -24,6 +27,13 @@ public class Application {
         ConfigurableApplicationContext context;
         context = SpringApplication.run(AggregatorConfig.class);
         Task jsonRetreiver = context.getBean(GameDataRetrieverTask.class);
+        
+        SpaceDelimitedCommandLineParser<YearFlag, YearContainer> argParser;
+        argParser = context.getBean(SpaceDelimitedCommandLineParser.class);
+        YearContainer container = argParser.parseFor(YearFlag.class, args);
+        
+        //container.
+        
         ((GameDataRetrieverTask) jsonRetreiver).setSearchYear(2014);
         try {
             while (!jsonRetreiver.taskComplete()) {

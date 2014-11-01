@@ -5,16 +5,16 @@
  */
 package com.fantasy.stataggregator.entities.dao.impl;
 
-import com.fantasy.stataggregator.entities.NflSchedule;
+import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.AbstractRepository;
 
 /**
  *
  * @author MacDerson
  */
-public class ScheduleRepository extends AbstractRepository<NflSchedule> {
+public class GameScheduleRepository extends AbstractRepository<GameSchedule> {
 
-    public ScheduleRepository() {
-        super(NflSchedule.class);
+    public GameScheduleRepository() {
+        super(GameSchedule.class);
     }
 }

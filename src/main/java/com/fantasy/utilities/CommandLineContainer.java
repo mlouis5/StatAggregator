@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fantasy.stataggregator;
+package com.fantasy.utilities;
 
 /**
  *
- * @author Mac
+ * @author MacDerson
  */
-public interface Task {
+public interface CommandLineContainer {
     
-    public boolean taskComplete();
-    
-    public void run() throws Exception;
+    void setValueFor(CommandLineFlag flag, String value);
 }

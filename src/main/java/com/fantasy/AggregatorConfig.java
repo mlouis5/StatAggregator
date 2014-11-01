@@ -9,7 +9,7 @@ import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
-import com.fantasy.stataggregator.entities.dao.impl.ScheduleRepository;
+import com.fantasy.stataggregator.entities.dao.impl.GameScheduleRepository;
 import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.text.SimpleDateFormat;
@@ -69,8 +69,8 @@ public class AggregatorConfig {
     }
     
     @Bean
-    public ScheduleRepository scheduleRepository() {
-        return new ScheduleRepository();
+    public GameScheduleRepository gameScheduleRepository() {
+        return new GameScheduleRepository();
     }
 
     @Bean

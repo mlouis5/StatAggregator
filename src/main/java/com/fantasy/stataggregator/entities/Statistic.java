@@ -16,10 +16,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Mac
+ * @author MacDerson
  */
 @Entity
 @Table(name = "statistic", catalog = "fantasy", schema = "drafttool")
@@ -202,6 +203,7 @@ public class Statistic implements Serializable {
     private Integer rushingYds;
     @Column(name = "stat_year")
     private Integer statYear;
+    @XmlTransient
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Player player;

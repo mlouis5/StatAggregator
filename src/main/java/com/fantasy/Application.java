@@ -7,6 +7,7 @@ package com.fantasy;
 
 import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
+import java.text.ParseException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,15 +20,15 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException, Exception {
         ConfigurableApplicationContext context;
         context = SpringApplication.run(AggregatorConfig.class);
         Task jsonRetreiver = context.getBean(GameDataRetrieverTask.class);
-        ((GameDataRetrieverTask) jsonRetreiver).setSearchYear(2013);
+        ((GameDataRetrieverTask) jsonRetreiver).setSearchYear(2014);
         try {
             while (!jsonRetreiver.taskComplete()) {
                 jsonRetreiver.run();
-                Thread.sleep(5000L);
+                Thread.sleep(2000L);
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);

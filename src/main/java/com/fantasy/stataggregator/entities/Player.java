@@ -6,20 +6,25 @@
 package com.fantasy.stataggregator.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Mac
+ * @author MacDerson
  */
 @Entity
 @Table(name = "player", catalog = "fantasy", schema = "drafttool")
@@ -28,16 +33,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Player.findAll", query = "SELECT p FROM Player p"),
     @NamedQuery(name = "Player.findByPlayerId", query = "SELECT p FROM Player p WHERE p.playerId = :playerId"),
     @NamedQuery(name = "Player.findByActive", query = "SELECT p FROM Player p WHERE p.active = :active"),
+    @NamedQuery(name = "Player.findByCollege", query = "SELECT p FROM Player p WHERE p.college = :college"),
+    @NamedQuery(name = "Player.findByDisplayname", query = "SELECT p FROM Player p WHERE p.displayname = :displayname"),
+    @NamedQuery(name = "Player.findByDob", query = "SELECT p FROM Player p WHERE p.dob = :dob"),
+    @NamedQuery(name = "Player.findByFname", query = "SELECT p FROM Player p WHERE p.fname = :fname"),
+    @NamedQuery(name = "Player.findByHeight", query = "SELECT p FROM Player p WHERE p.height = :height"),
     @NamedQuery(name = "Player.findByJersey", query = "SELECT p FROM Player p WHERE p.jersey = :jersey"),
     @NamedQuery(name = "Player.findByLname", query = "SELECT p FROM Player p WHERE p.lname = :lname"),
-    @NamedQuery(name = "Player.findByFname", query = "SELECT p FROM Player p WHERE p.fname = :fname"),
-    @NamedQuery(name = "Player.findByDisplayname", query = "SELECT p FROM Player p WHERE p.displayname = :displayname"),
-    @NamedQuery(name = "Player.findByTeam", query = "SELECT p FROM Player p WHERE p.team = :team"),
     @NamedQuery(name = "Player.findByPosition", query = "SELECT p FROM Player p WHERE p.position = :position"),
-    @NamedQuery(name = "Player.findByHeight", query = "SELECT p FROM Player p WHERE p.height = :height"),
-    @NamedQuery(name = "Player.findByWeight", query = "SELECT p FROM Player p WHERE p.weight = :weight"),
-    @NamedQuery(name = "Player.findByDob", query = "SELECT p FROM Player p WHERE p.dob = :dob"),
-    @NamedQuery(name = "Player.findByCollege", query = "SELECT p FROM Player p WHERE p.college = :college")})
+    @NamedQuery(name = "Player.findByWeight", query = "SELECT p FROM Player p WHERE p.weight = :weight")})
 public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,29 +50,31 @@ public class Player implements Serializable {
     private Integer playerId;
     @Column(name = "active")
     private Integer active;
+    @Column(name = "college", length = 128)
+    private String college;
+    @Column(name = "displayname", length = 257)
+    private String displayname;
+    @Column(name = "dob")
+    @Temporal(TemporalType.DATE)
+    private Date dob;
+    @Column(name = "fname", length = 128)
+    private String fname;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "height", precision = 17, scale = 17)
+    private Double height;
     @Column(name = "jersey")
     private Integer jersey;
     @Column(name = "lname", length = 128)
     private String lname;
-    @Column(name = "fname", length = 128)
-    private String fname;
-    @Column(name = "displayname", length = 257)
-    private String displayname;
-    @Column(name = "team", length = 3)
-    private String team;
     @Column(name = "position", length = 3)
     private String position;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "height", precision = 17, scale = 17)
-    private Double height;
     @Column(name = "weight")
     private Integer weight;
-    @Column(name = "dob", length = 10)
-    private String dob;
-    @Column(name = "college", length = 128)
-    private String college;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "player")
     private Statistic statistic;
+    @JoinColumn(name = "team", referencedColumnName = "code")
+    @ManyToOne
+    private Team team;
 
     public Player() {
     }
@@ -93,6 +99,46 @@ public class Player implements Serializable {
         this.active = active;
     }
 
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
     public Integer getJersey() {
         return jersey;
     }
@@ -109,44 +155,12 @@ public class Player implements Serializable {
         this.lname = lname;
     }
 
-    public String getFname() {
-        return fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getDisplayname() {
-        return displayname;
-    }
-
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
     public String getPosition() {
         return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
     }
 
     public Integer getWeight() {
@@ -157,28 +171,20 @@ public class Player implements Serializable {
         this.weight = weight;
     }
 
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getCollege() {
-        return college;
-    }
-
-    public void setCollege(String college) {
-        this.college = college;
-    }
-
     public Statistic getStatistic() {
         return statistic;
     }
 
     public void setStatistic(Statistic statistic) {
         this.statistic = statistic;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override

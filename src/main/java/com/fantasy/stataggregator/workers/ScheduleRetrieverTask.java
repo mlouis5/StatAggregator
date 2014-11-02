@@ -7,6 +7,7 @@ package com.fantasy.stataggregator.workers;
 
 import com.fantasy.AggregatorConfig;
 import com.fantasy.stataggregator.Task;
+import com.fantasy.stataggregator.annotations.TaskRunner;
 import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameScheduleRepository;
 import java.lang.reflect.Field;
@@ -26,7 +27,6 @@ import javax.ws.rs.core.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -35,6 +35,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  * @author Mac
  */
+@TaskRunner
 public class ScheduleRetrieverTask implements Task {
 
     private static final String RESOURCE_LOCATOR = "http://www.fantasyfootballnerd.com/service/schedule/";

@@ -20,11 +20,7 @@ public class YearContainer implements CommandLineContainer {
     private boolean isSet;
     private String packageName;
     private String className;
-
-    public int getYear() {
-        return year;
-    }
-
+    
     public YearContainer() {
         year = Integer.MIN_VALUE;
         isSet = false;
@@ -35,16 +31,33 @@ public class YearContainer implements CommandLineContainer {
         if (Objects.equals(YearFlag.YEAR, flag)) {
             if (year < Integer.MAX_VALUE) {
                 year = Integer.parseInt(value);
-                setTrue();
             }
         } else if (Objects.equals(YearFlag.ALL, flag)) {
             year = Integer.MAX_VALUE;
-            setTrue();
+        } else if (Objects.equals(YearFlag.PACKAGE_NAME, flag)) {
+            packageName = value;
+        }else if(Objects.equals(YearFlag.CLASS_NAME, flag)){
+            className = value;
         }
+    }
+    
+    public int getYear() {
+        return year;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     @Override
     public boolean isSet() {
+        if(year > Integer.MIN_VALUE && Objects.nonNull(packageName) && Objects.nonNull(className)){
+            setTrue();
+        }
         return isSet;
     }
 

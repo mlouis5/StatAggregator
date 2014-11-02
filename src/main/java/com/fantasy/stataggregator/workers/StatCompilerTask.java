@@ -6,6 +6,7 @@
 package com.fantasy.stataggregator.workers;
 
 import com.fantasy.stataggregator.Task;
+import com.fantasy.stataggregator.annotations.TaskRunner;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version %I%, %G%
  * @author Mac
  */
+@TaskRunner
 public class StatCompilerTask implements Task{
     
     @Autowired

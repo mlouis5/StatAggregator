@@ -18,9 +18,8 @@ public enum YearFlag implements CommandLineFlag<YearFlag, YearContainer>{
 
     YEAR("^(-y|-yr|--year)$", true, "^(2[0-9][1-9]\\d)$"), 
     ALL("^(-\\*|--all|-a)$", false, null, YearFlag.YEAR),
-    PACKAGE("", true, "^([a-z]+)$"),
-    NAME("^(-n|-nm|--name)$", true, "^([a-z]+)(\\.)([A-Z][a-z]+)+(\\.)(java)$"),
-    ;
+    PACKAGE_NAME("^(-pk|--package|-p)$", true, "^([a-z]+(\\.)?)+$"),
+    CLASS_NAME("^(-c|-cl|--class)$", true, "^([A-Z][a-z]+)+(\\.)?(java)?$");
     
     private final Pattern value;
     private final boolean capturesData;

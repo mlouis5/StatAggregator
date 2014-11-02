@@ -7,6 +7,8 @@ package com.fantasy.stataggregator.workers;
 
 import com.fantasy.AggregatorConfig;
 import com.fantasy.stataggregator.Task;
+import com.fantasy.stataggregator.YearlyTask;
+import com.fantasy.stataggregator.annotations.TaskRunner;
 import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.GameSchedule;
@@ -40,7 +42,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @version %I%, %G%
  * @author MacDerson
  */
-public class GameDataRetrieverTask implements Task {
+@TaskRunner
+public class GameDataRetrieverTask implements YearlyTask {
 
     private static final int FIRST_INDEX = 0;
     private static final String pathSeparator = "/";
@@ -67,7 +70,8 @@ public class GameDataRetrieverTask implements Task {
      * @param year
      * @throws java.text.ParseException
      */
-    public void setSearchYear(int year) throws ParseException {
+    @Override
+    public void setYear(int year) throws ParseException {
         this.year = year;
         isTaskComplete = false;
         sdf.applyLocalizedPattern("yyyyMMdd");
@@ -109,9 +113,10 @@ public class GameDataRetrieverTask implements Task {
      * run retrieves one game at a time, it is up the the controlling class, to
      * recursively call this method.
      * @throws java.text.ParseException
+     * @throws java.lang.InterruptedException
      */
     @Override
-    public void run() throws ParseException {
+    public void run() throws ParseException, InterruptedException {
         if (Objects.nonNull(year) && Objects.nonNull(schedules)) {
             if (schedules.isEmpty()) {
                 isTaskComplete = true;
@@ -137,6 +142,7 @@ public class GameDataRetrieverTask implements Task {
                 isTaskComplete = true;
             }
         }
+        Thread.sleep(2000L);
     }
 
     /**

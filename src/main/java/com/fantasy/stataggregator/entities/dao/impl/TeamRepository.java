@@ -5,17 +5,17 @@
  */
 package com.fantasy.stataggregator.entities.dao.impl;
 
-import com.fantasy.stataggregator.entities.GameData;
+import com.fantasy.stataggregator.entities.Team;
 import com.fantasy.stataggregator.entities.dao.AbstractRepository;
 
 /**
  *
  * @author Mac
  */
-public class GameDataRepository extends AbstractRepository<GameData>  {
+public class TeamRepository extends AbstractRepository<Team>  {
     
-    public GameDataRepository() {
-        super(GameData.class);
+    public TeamRepository() {
+        super(Team.class);
     }
     
 }

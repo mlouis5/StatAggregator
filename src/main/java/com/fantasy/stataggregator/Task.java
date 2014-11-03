@@ -9,9 +9,6 @@ package com.fantasy.stataggregator;
  *
  * @author Mac
  */
-public interface Task {
-    
-    public boolean taskComplete();
-    
+public interface Task {    
     public void run() throws Exception;
 }

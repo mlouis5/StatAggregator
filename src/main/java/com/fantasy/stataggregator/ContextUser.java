@@ -5,14 +5,13 @@
  */
 package com.fantasy.stataggregator;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  *
  * @author Mac
  */
-public interface YearlyTask extends Task{
+public interface ContextUser {
     
-    public static final String START_OF_YEAR = "0101";
-    public static final String END_OF_YEAR = "1231";
-    
-    void setYear(int year) throws Exception;
+    void haveContext(ApplicationContext appContext);
 }

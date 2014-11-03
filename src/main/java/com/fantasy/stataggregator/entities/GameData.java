@@ -44,7 +44,7 @@ public class GameData implements Serializable {
         this.gameDataPK = gameDataPK;
     }
 
-    public GameData(String gameIdentifier, int year) {
+    public GameData(Integer gameIdentifier, int year) {
         this.gameDataPK = new GameDataPK(gameIdentifier, year);
     }
 

@@ -17,8 +17,8 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class GameDataPK implements Serializable {
     @Basic(optional = false)
-    @Column(name = "game_identifier", nullable = false, length = 10)
-    private String gameIdentifier;
+    @Column(name = "game_identifier", nullable = false)
+    private Integer gameIdentifier;
     @Basic(optional = false)
     @Column(name = "year", nullable = false)
     private int year;
@@ -26,16 +26,16 @@ public class GameDataPK implements Serializable {
     public GameDataPK() {
     }
 
-    public GameDataPK(String gameIdentifier, int year) {
+    public GameDataPK(Integer gameIdentifier, int year) {
         this.gameIdentifier = gameIdentifier;
         this.year = year;
     }
 
-    public String getGameIdentifier() {
+    public Integer getGameIdentifier() {
         return gameIdentifier;
     }
 
-    public void setGameIdentifier(String gameIdentifier) {
+    public void setGameIdentifier(Integer gameIdentifier) {
         this.gameIdentifier = gameIdentifier;
     }
 

@@ -6,14 +6,10 @@
 package com.fantasy.stataggregator.workers;
 
 import com.fantasy.stataggregator.annotations.TaskRunner;
-import com.fantasy.stataggregator.entities.Player;
 import com.fantasy.stataggregator.entities.Team;
-import com.fantasy.stataggregator.entities.dao.impl.PlayerRepository;
 import com.fantasy.stataggregator.entities.dao.impl.TeamRepository;
-import static com.fantasy.stataggregator.workers.FieldSetter.SDF;
 import java.lang.reflect.Field;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +53,6 @@ public class TeamRetrieverTask extends DataRetriever {
                 });
             }
         }
-        isTaskComplete = true;
     }
 
     private List<Team> getEntities(JSONArray jsonArr) throws

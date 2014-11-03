@@ -5,7 +5,6 @@
  */
 package com.fantasy.stataggregator.workers;
 
-import com.fantasy.AggregatorConfig;
 import com.fantasy.stataggregator.ServiceConsumer;
 import static com.fantasy.stataggregator.ServiceConsumer.RESOURCE_BASE_LOCATOR;
 import com.fantasy.stataggregator.Task;
@@ -20,36 +19,28 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  *
  * @author Mac
  */
-public abstract class DataRetriever extends FieldSetter implements Task, ServiceConsumer{
+public abstract class DataRetriever extends FieldSetter implements Task, ServiceConsumer {
+
     private final String RESOURCE;
-    private String FORMAT = "json";
+    private final String FORMAT = "json";
     private final String KEY = "guxtr5ihdj7t";
-    
-    
-    protected boolean isTaskComplete;
-    
-    protected final ApplicationContext ctx;
-    
-    DataRetriever(String resource){
+
+    @Autowired
+    protected ApplicationContext ctx;
+
+    DataRetriever(String resource) {
         RESOURCE = resource;
-        ctx = new AnnotationConfigApplicationContext(AggregatorConfig.class);
-        isTaskComplete = false;
         SDF = ctx.getBean(SimpleDateFormat.class);
         SDF.applyLocalizedPattern("yyyy-MM-dd");
     }
-    
-    @Override
-    public boolean taskComplete() {
-        return isTaskComplete;
-    }
-    
+
     @Override
     public JSONObject makeRequest() {
         WebTarget target = getTarget();
@@ -69,8 +60,8 @@ public abstract class DataRetriever extends FieldSetter implements Task, Service
         }
         return null;
     }
-    
-    protected WebTarget getTarget(){
+
+    protected WebTarget getTarget() {
         Client client = ctx.getBean(Client.class);
         WebTarget target = client.target(RESOURCE_BASE_LOCATOR).path(RESOURCE).path(FORMAT)
                 .path(KEY);

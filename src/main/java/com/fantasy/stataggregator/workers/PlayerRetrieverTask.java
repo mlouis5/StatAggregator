@@ -12,7 +12,6 @@ import com.fantasy.stataggregator.entities.dao.impl.PlayerRepository;
 import com.fantasy.stataggregator.entities.dao.impl.TeamRepository;
 import java.lang.reflect.Field;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,7 +57,6 @@ public class PlayerRetrieverTask extends DataRetriever {
                 });
             }
         }
-        isTaskComplete = true;
     }
 
     private List<Player> getEntities(JSONArray jsonArr) throws

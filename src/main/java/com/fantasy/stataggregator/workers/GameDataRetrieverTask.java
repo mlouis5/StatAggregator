@@ -5,8 +5,7 @@
  */
 package com.fantasy.stataggregator.workers;
 
-import com.fantasy.AggregatorConfig;
-import com.fantasy.stataggregator.Task;
+import com.fantasy.stataggregator.ContextUser;
 import com.fantasy.stataggregator.YearlyTask;
 import com.fantasy.stataggregator.annotations.TaskRunner;
 import com.fantasy.stataggregator.entities.GameData;
@@ -32,7 +31,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * GameDataRetrieverTask retrieves every json file from nfl.com's game center
@@ -50,16 +48,10 @@ public class GameDataRetrieverTask implements YearlyTask {
     private static final String BASE_NFL_LINK = "http://www.nfl.com";
     private static final String path = "liveupdate/game-center";
     private static final String FORMAT = ".json";
-    @Autowired
-    private SimpleDateFormat sdf;
+    
     private int year;
-    @Autowired
-    private GameScheduleRepository gsr;
-    @Autowired
-    private GameDataRepository gdr;
-    @Autowired
-    private Client client;
     private List<GameSchedule> schedules;
+    @Autowired
     private ApplicationContext ctx;
     private boolean isTaskComplete;
     int count = 1;
@@ -72,22 +64,29 @@ public class GameDataRetrieverTask implements YearlyTask {
      */
     @Override
     public void setYear(int year) throws ParseException {
-        this.year = year;
-        isTaskComplete = false;
-        sdf.applyLocalizedPattern("yyyyMMdd");
-        
-        Date min = sdf.parse(year + "0101");
-        Date max = sdf.parse(year + "1231");
-        
-        CriteriaBuilder cb = gsr.getCriteriaBuilder();
-            CriteriaQuery<GameSchedule> cq = gsr.getCriteriaQuery();
-            Root<GameSchedule> gameSchedule = gsr.getRoot();
-            cq.select(gameSchedule).where(cb.between(gameSchedule.get(GameSchedule_.gamedate),
-                    min, max)).orderBy(cb.asc(gameSchedule.get(GameSchedule_.gameid)));
-                    
-        schedules = gsr.getCriteriaList(cq);
-        System.out.println(schedules.size());
-        ctx = new AnnotationConfigApplicationContext(AggregatorConfig.class);
+        if (Objects.nonNull(ctx)) {
+            this.year = year;
+            isTaskComplete = false;
+            GameScheduleRepository gsr = ctx.getBean(GameScheduleRepository.class);
+            if (year == Integer.MAX_VALUE) {
+                schedules = gsr.findAll();
+            } else {
+                SimpleDateFormat sdf = ctx.getBean(SimpleDateFormat.class);
+                sdf.applyLocalizedPattern("yyyyMMdd");
+
+                Date min = sdf.parse(year + START_OF_YEAR);
+                Date max = sdf.parse(year + END_OF_YEAR);
+
+                CriteriaBuilder cb = gsr.getCriteriaBuilder();
+                CriteriaQuery<GameSchedule> cq = gsr.getCriteriaQuery();
+                Root<GameSchedule> gameSchedule = gsr.getRoot();
+                cq.select(gameSchedule).where(cb.between(gameSchedule.get(GameSchedule_.gamedate),
+                        min, max)).orderBy(cb.asc(gameSchedule.get(GameSchedule_.gameid)));
+
+                schedules = gsr.getCriteriaList(cq);
+                System.out.println(schedules.size());
+            }
+        }
     }
 
     /**
@@ -97,10 +96,6 @@ public class GameDataRetrieverTask implements YearlyTask {
      *
      * @return
      */
-    @Override
-    public boolean taskComplete() {
-        return isTaskComplete;
-    }
 
     /**
      * Retrieves a JSON String representing a single NFL game played, on a given
@@ -112,37 +107,39 @@ public class GameDataRetrieverTask implements YearlyTask {
      *
      * run retrieves one game at a time, it is up the the controlling class, to
      * recursively call this method.
+     *
      * @throws java.text.ParseException
      * @throws java.lang.InterruptedException
      */
     @Override
     public void run() throws ParseException, InterruptedException {
         if (Objects.nonNull(year) && Objects.nonNull(schedules)) {
-            if (schedules.isEmpty()) {
-                isTaskComplete = true;
-                return;
-            }
-            
-            //get the earliest scheduled game
-            GameSchedule sched = schedules.remove(FIRST_INDEX);
+            while (!schedules.isEmpty()) {
+                //get the earliest scheduled game
+                GameSchedule sched = schedules.remove(FIRST_INDEX);
 
-            //if this NflSchedule is in the past, proceed
-            if (Objects.nonNull(sched) && hasBeenPlayed(sched)) {
-                Response response = requestData(sched);
+                //if this NflSchedule is in the past, proceed
+                if (Objects.nonNull(sched) && hasBeenPlayed(sched)) {
+                    Response response = requestData(sched);
 
-                //if request was successful, proceed with saving data.
-                if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-                    String nflData = response.readEntity(String.class);
+                    //if request was successful, proceed with saving data.
+                    if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+                        String nflData = response.readEntity(String.class);
 
-                    persistGameData(sched.getGameid(), nflData);
-                    System.out.println(count);
+                        persistGameData(sched.getGameid(), nflData);
+                        System.out.println(count);
+                    }
+                    count++;
+                } else if (Objects.nonNull(sched) && !hasBeenPlayed(sched)) {
+                    isTaskComplete = true;
+                    break;
                 }
-                count++;
-            }else if(Objects.nonNull(sched) && !hasBeenPlayed(sched)){
+                Thread.sleep(2000L);
+            }
+            if (schedules.isEmpty()) {
                 isTaskComplete = true;
             }
         }
-        Thread.sleep(2000L);
     }
 
     /**
@@ -152,6 +149,7 @@ public class GameDataRetrieverTask implements YearlyTask {
      * @return
      */
     private Response requestData(GameSchedule sched) {
+        Client client = ctx.getBean(Client.class);
         WebTarget target = client.target(BASE_NFL_LINK).path(path)
                 .path(sched.getGameid().toString()).path(sched.getGameid() + "_gtd" + FORMAT);
 
@@ -166,13 +164,13 @@ public class GameDataRetrieverTask implements YearlyTask {
      * @return
      */
     private boolean hasBeenPlayed(GameSchedule sched) throws ParseException {
-            Date gameDate = sched.getGamedate();
-            if (Objects.nonNull(gameDate)) {
-                LocalDate dateOnly = LocalDateTime.ofInstant(
-                        gameDate.toInstant(), ZoneId.systemDefault()).toLocalDate();
+        Date gameDate = sched.getGamedate();
+        if (Objects.nonNull(gameDate)) {
+            LocalDate dateOnly = LocalDateTime.ofInstant(
+                    gameDate.toInstant(), ZoneId.systemDefault()).toLocalDate();
 
-                return dateOnly.isBefore(LocalDate.now());
-            }        
+            return dateOnly.isBefore(LocalDate.now());
+        }
         return false;
     }
 
@@ -187,12 +185,13 @@ public class GameDataRetrieverTask implements YearlyTask {
         GameData gd = ctx.getBean(GameData.class);
         GameDataPK gdPK = ctx.getBean(GameDataPK.class);
 
-        gdPK.setGameIdentifier(String.valueOf(identifier));
+        gdPK.setGameIdentifier(identifier);
         gdPK.setYear(year);
 
         gd.setGameDataPK(gdPK);
 
         gd.setGame(nflData);
+        GameDataRepository gdr = ctx.getBean(GameDataRepository.class);
         gdr.create(gd);
 
         GameData gdTest = gdr.find(gdPK);

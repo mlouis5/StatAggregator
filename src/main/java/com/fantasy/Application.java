@@ -5,10 +5,10 @@
  */
 package com.fantasy;
 
+import com.fantasy.stataggregator.ContextUser;
 import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.YearlyTask;
 import com.fantasy.stataggregator.annotations.TaskRunner;
-import com.fantasy.stataggregator.workers.GameDataRetrieverTask;
 import com.fantasy.utilities.containers.YearContainer;
 import com.fantasy.utilities.flags.YearFlag;
 import com.fantasy.utilities.parsers.SpaceDelimitedCommandLineParser;
@@ -39,7 +39,6 @@ public class Application {
     public static void main(String[] args) throws ParseException, Exception {
         ConfigurableApplicationContext context;
         context = SpringApplication.run(AggregatorConfig.class);
-        Task jsonRetreiver = context.getBean(GameDataRetrieverTask.class);
 
         SpaceDelimitedCommandLineParser<YearFlag, YearContainer> argParser;
         argParser = context.getBean(SpaceDelimitedCommandLineParser.class);
@@ -48,37 +47,31 @@ public class Application {
         String packageName = container.getPackageName();
         String className = container.getClassName();
         int year = container.getYear();
-        
-        System.out.println(argParser);
-        System.out.println(packageName);
-        System.out.println(className);
-        System.out.println(year);
+
         List<Class> taskRunners = findTypes(packageName);
         Class runner = null;
 
-        System.out.println(taskRunners);
         if (Objects.nonNull(taskRunners)) {
             for (Class cl : taskRunners) {
-                System.out.println(cl);
                 if (cl.getSimpleName().equalsIgnoreCase(className)) {
                     runner = cl;
-                    System.out.println(runner);
                     break;
                 }
             }
 
             if (Objects.nonNull(runner)) {
-                Task task = (Task) runner.newInstance();
+                Task task = (Task) context.getBean(runner);
 
                 if (Objects.nonNull(task)) {
+                    if (task instanceof ContextUser) {
+                        ((ContextUser) task).haveContext(context);
+                    }
                     if (task instanceof YearlyTask) {
                         ((YearlyTask) task).setYear(year);
                     }
 
                     try {
-                        while (!task.taskComplete()) {
-                            task.run();
-                        }
+                        task.run();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -87,18 +80,6 @@ public class Application {
                         }
                     }
                 }
-                //((GameDataRetrieverTask) jsonRetreiver).setSearchYear(2014);
-//                try {
-//                    while (!jsonRetreiver.taskComplete()) {
-//                        jsonRetreiver.run();                        
-//                    }
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-//                } finally {
-//                    if (Objects.nonNull(context)) {
-//                        context.close();
-//                    }
-//                }
             }
         }
     }

@@ -10,7 +10,6 @@ import com.fantasy.stataggregator.entities.GameSchedule;
 import com.fantasy.stataggregator.entities.dao.impl.GameScheduleRepository;
 import java.lang.reflect.Field;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -62,7 +61,6 @@ public class ScheduleRetrieverTask extends DataRetriever {
                 Logger.getLogger(ScheduleRetrieverTask.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        isTaskComplete = true;
     }
 
     private List<GameSchedule> getSchedules(JSONArray jsonArr) {

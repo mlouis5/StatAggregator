@@ -5,17 +5,13 @@
  */
 package com.fantasy.stataggregator.workers;
 
-import com.fantasy.stataggregator.Task;
 import com.fantasy.stataggregator.YearlyTask;
 import com.fantasy.stataggregator.annotations.TaskRunner;
 import com.fantasy.stataggregator.entities.GameData;
 import com.fantasy.stataggregator.entities.GameDataPK;
 import com.fantasy.stataggregator.entities.GameDataPK_;
 import com.fantasy.stataggregator.entities.GameData_;
-import com.fantasy.stataggregator.entities.GameSchedule;
-import com.fantasy.stataggregator.entities.GameSchedule_;
 import com.fantasy.stataggregator.entities.dao.impl.GameDataRepository;
-import com.fantasy.stataggregator.entities.dao.impl.GameScheduleRepository;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

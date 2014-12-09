@@ -5,9 +5,7 @@
  */
 package com.fantasy.stataggregator.entities.dao;
 
-import com.fantasy.stataggregator.entities.GameData;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,7 +20,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -80,16 +77,6 @@ public abstract class AbstractRepository<T> {
         return entity;
     }
     
-//    private T between(Class<?> param, Object min, Object max){
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//        javax.persistence.criteria.CriteriaQuery<T> cq = cb.createQuery(entityClass);
-//        Metamodel mm = em.getMetamodel();
-//        EntityType<T> type = mm.entity(entityClass);
-//        Root<T> entity = cq.from(entityClass);
-//        //cq.select(entity);
-//        //cq.where(entity.get(type.))
-//        
-//    }
     public List<T> getCriteriaList(CriteriaQuery<T> cq){
         TypedQuery<T> query = em.createQuery(cq);
         return query.getResultList();
@@ -138,9 +125,9 @@ public abstract class AbstractRepository<T> {
             TypedQuery<T> query
                     = em.createNamedQuery(queryName, entityClass);
             if (Objects.nonNull(parameters) && !parameters.isEmpty()) {
-                for (Map.Entry entry : parameters.entrySet()) {
+                parameters.entrySet().stream().forEach((entry) -> {
                     query.setParameter((String) entry.getKey(), entry.getValue());
-                }
+                });
             }
             results = query.getResultList();
         }

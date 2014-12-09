@@ -86,11 +86,6 @@ public class ScheduleRetrieverTask extends DataRetriever {
         return games;
     }
     
-//    public static void main(String[] args){
-//        ScheduleRetrieverTask srt = new ScheduleRetrieverTask();
-//        srt.run();
-//    }
-    
     private void setTrueGameId(List<GameSchedule> games) throws IllegalArgumentException, IllegalAccessException, ParseException, NoSuchFieldException{
         int count = 0;
         String latestDate = null;

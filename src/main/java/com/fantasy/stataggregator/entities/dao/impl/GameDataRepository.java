@@ -16,6 +16,5 @@ public class GameDataRepository extends AbstractRepository<GameData>  {
     
     public GameDataRepository() {
         super(GameData.class);
-    }
-    
+    }    
 }
